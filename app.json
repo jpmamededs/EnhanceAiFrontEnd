@@ -3,35 +3,41 @@
     "name": "EnhanceAiFrontEnd",
     "slug": "EnhanceAiFrontEnd",
     "version": "1.0.0",
-
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "experiments": {
       "tsconfigPaths": true
     },
-
     "plugins": [],
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jpmamededs.EnhanceAiFrontEnd",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.jpmamededs.EnhanceAiFrontEnd"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "37208b9a-0f10-454c-8d5d-91edf2eefaa9"
       }
     }
   }
