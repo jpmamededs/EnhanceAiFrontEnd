@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './types/navigation';
@@ -43,7 +43,7 @@ export default function App() {
     
     <GluestackUIProvider mode="dark">
       <View className="flex-1">
-        <Navbar/>
+        {Platform.OS === 'web' ? (<Navbar/>) : (null) }
         <NavigationContainer>
           <Stack.Navigator 
             initialRouteName="Exercise"

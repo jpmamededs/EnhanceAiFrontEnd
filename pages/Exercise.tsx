@@ -1,8 +1,9 @@
-import { FaBraille } from "react-icons/fa";
+import { FaBraille, FaCheckCircle } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { TbNorthStar } from "react-icons/tb";
 import { HiChevronRight } from "react-icons/hi";
 import { CgDetailsMore } from "react-icons/cg";
+import { ImCross } from "react-icons/im";
 /* -------------------------------------------- */
 import { Spinner } from '@/components/ui/spinner';
 import Select from "@/components/SelectUI";
@@ -21,6 +22,8 @@ function Exercise() {
         inputText,
         isLoading,
         modalVisible,
+        passedExercise,
+        setPassedExercise,
         setModalVisible,
         setInputText,
         handleSendPrompt,
@@ -75,7 +78,7 @@ function Exercise() {
                     <View className="w-full h-fit flex flex-col gap-2">
                         {generatedValue?.url && !isLoading && (
                             <TouchableOpacity className="rounded-lg bg-white w-full h-fit mb-2 flex flex-row items-center justify-between px-2 py-2" onPress={() => { setModalVisible(!modalVisible) }}>
-                                <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance score: {generatedScore?.score ?? 'Loading'} </Text>
+                                <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]"/>) : (<ImCross className="text-[#FF7E7E]"/>)} </Text>
                                 <CircularProgressBar score={generatedScore?.score} sizeValue={30} widthValue={4} fontSize={12}/>
                                 <HiChevronRight className="text-enhance-black" />
                             </TouchableOpacity>

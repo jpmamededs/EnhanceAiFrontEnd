@@ -8,6 +8,7 @@ export const useExercise = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [allGeneratedValues, setAllGeneratedValues] = useState<{ url?: string }[]>([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [passedExercise, setPassedExercise] = useState(false);
 
     const handleSendPrompt = async () => {
         if (inputText.trim()) {
@@ -43,11 +44,16 @@ export const useExercise = () => {
                     // Fallback para caso a resposta seja diretamente um array
                     comparisonData = retrievedComparisonData[0];
                 } else if (retrievedComparisonData && retrievedComparisonData.score) {
-                    // Fallback para caso a resposta tenha url diretamente
+                    // Fallback para caso a resposta tenha score diretamente
                     comparisonData = retrievedComparisonData;
                 }
 
                 setGeneratedScore(comparisonData);
+
+                // Verifica se o exercício foi aprovado com base no score
+                if (comparisonData?.score !== undefined) {
+                    setPassedExercise(comparisonData.score >= 80);
+                }
 
                 // Adiciona a URL gerada ao array de todos os valores
                 if (imageData && imageData.url) {
@@ -55,7 +61,7 @@ export const useExercise = () => {
                 }
 
             } catch (error) {
-                // Erro ao processar requisição
+                console.log(error);
             } finally {
                 setIsLoading(false);
             }
@@ -69,6 +75,8 @@ export const useExercise = () => {
         isLoading,
         allGeneratedValues,
         modalVisible,
+        passedExercise,
+        setPassedExercise,
         setModalVisible,
         setInputText,
         handleSendPrompt,

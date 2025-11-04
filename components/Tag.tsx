@@ -8,7 +8,7 @@ interface TagProps {
 function Tag({ name, backgroundColor = "#BDC8FF"}: TagProps) {
     return (
         <View 
-            className="px-3 py-1 rounded-full"
+            className="px-3 py-1 rounded-full w-fit h-fit"
             style={{ backgroundColor }}
         >
             <Text 
