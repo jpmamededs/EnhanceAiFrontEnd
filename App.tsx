@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './types/navigation';
@@ -12,6 +13,7 @@ import './global.css';
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
+import Navbar from './components/Navbar';
 
 // Previne o splash screen de ser escondido automaticamente
 SplashScreen.preventAutoHideAsync();
@@ -40,16 +42,19 @@ export default function App() {
   return (
     
     <GluestackUIProvider mode="dark">
-      <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="Exercise"
-        screenOptions={{
-          headerShown: false, // Remove o header padrão
-        }}
-      >
-        <Stack.Screen name="Exercise" component={Exercise} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <View className="flex-1">
+        <Navbar/>
+        <NavigationContainer>
+          <Stack.Navigator 
+            initialRouteName="Exercise"
+            screenOptions={{
+              headerShown: false, // Remove o header padrão
+            }}
+          >
+            <Stack.Screen name="Exercise" component={Exercise} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
     </GluestackUIProvider>
   
   );
