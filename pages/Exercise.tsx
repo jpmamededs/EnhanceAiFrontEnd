@@ -13,6 +13,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-nat
 /* -------------------------------------------- */
 import { useExercise } from "../hooks/useExercise";
 import CircularProgressBar from "@/components/CircularProgressBar";
+import DrawerUI from "@/components/DrawerUI";
 
 function Exercise() {
 
@@ -33,10 +34,14 @@ function Exercise() {
         <>
             <View className="w-full h-full bg-enhance-black flex flex-col sm:flex-row p-2 sm:p-4 gap-2 sm:max-w-full sm:overflow-hidden">
                 <View className="flex-1 rounded-xl px-4 sm:px-6 py-3 sm:py-4 h-full sm:min-w-0 sm:flex-shrink">
-                    <View className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2 sm:flex-wrap">
-                        <Text className="font-bold text-2xl sm:text-3xl font-space-grotesk-bold text-lime-green sm:flex-shrink-0">Nome do exercício</Text>
-                        <Tag name="Image generation" />
+                    <View className="flex flex-row h-fit w-full items-top justify-between">
+                        <View className="flex flex-col h-fit sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2 sm:flex-wrap">
+                            <Text className="font-bold text-2xl sm:text-3xl font-space-grotesk-bold text-lime-green sm:flex-shrink-0">Nome do exercício 2</Text>
+                            <Tag name="Image generation" />
+                        </View>
+                        <DrawerUI />
                     </View>
+
                     <Text className="font-space-grotesk-medium text-white text-sm sm:text-base">Lorem ipsum dolor sin amet</Text>
 
                     <View className=" sm:mt-4 w-full h-full flex-1 bg-medium-grey rounded-lg overflow-hidden">
@@ -46,7 +51,6 @@ function Exercise() {
                             resizeMode="contain"
                         />
                     </View>
-
                 </View>
 
                 <View className="w-full sm:w-80 sm:max-w-[35%] sm:flex-shrink-0 h-80 sm:h-auto rounded-xl p-3 sm:p-4 border-2 border-white flex flex-col justify-start items-center gap-1">
@@ -78,8 +82,8 @@ function Exercise() {
                     <View className="w-full h-fit flex flex-col gap-2">
                         {generatedValue?.url && !isLoading && (
                             <TouchableOpacity className="rounded-lg bg-white w-full h-fit mb-2 flex flex-row items-center justify-between px-2 py-2" onPress={() => { setModalVisible(!modalVisible) }}>
-                                <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]"/>) : (<ImCross className="text-[#FF7E7E]"/>)} </Text>
-                                <CircularProgressBar score={generatedScore?.score} sizeValue={30} widthValue={4} fontSize={12}/>
+                                <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]" />) : (<ImCross className="text-[#FF7E7E]" />)} </Text>
+                                <CircularProgressBar score={generatedScore?.score} sizeValue={30} widthValue={4} fontSize={12} />
                                 <HiChevronRight className="text-enhance-black" />
                             </TouchableOpacity>
                         )}
@@ -117,7 +121,7 @@ function Exercise() {
                             <CgDetailsMore />
                             Score Details
                         </Text>
-                        <CircularProgressBar score={generatedScore?.score} sizeValue={120} widthValue={15}/>
+                        <CircularProgressBar score={generatedScore?.score} sizeValue={120} widthValue={15} />
                         <View className="mb-6">
                             <Text className="text-sm font-space-grotesk-light text-gray-600">
                                 {generatedScore?.explanation || 'Loading description'}
