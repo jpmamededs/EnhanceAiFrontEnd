@@ -4,7 +4,7 @@ import { FaInfoCircle, FaHome } from "react-icons/fa";
 
 function Navbar() {
     return (
-        <SafeAreaView className="border-b border-white">
+        <SafeAreaView className="border-b border-white bg-enhance-black">
             <View className="flex-row items-center justify-between px-3 py-2 sm:px-6 sm:py-4">
 
                 <View className="flex-row items-center">

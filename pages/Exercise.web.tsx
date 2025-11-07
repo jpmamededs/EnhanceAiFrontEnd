@@ -14,8 +14,9 @@ import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-nat
 import { useExercise } from "../hooks/useExercise";
 import CircularProgressBar from "@/components/CircularProgressBar";
 import DrawerUI from "@/components/DrawerUI";
+import Navbar from "@/components/Navbar";
 
-function Exercise() {
+function ExerciseWeb() {
 
     const {
         generatedValue,
@@ -142,4 +143,4 @@ function Exercise() {
     )
 }
 
-export default Exercise;
+export default ExerciseWeb;
