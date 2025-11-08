@@ -15,8 +15,8 @@ export default function WebNavigator() {
                 prefixes: ['http://localhost:8081'],
                 config: {
                     screens: {
-                        Exercise: '',
-                        Home: 'home',
+                        Home: '',
+                        Exercise: 'exercise',
                         Auth: 'auth/login',
                         Register: 'auth/register',
                     },

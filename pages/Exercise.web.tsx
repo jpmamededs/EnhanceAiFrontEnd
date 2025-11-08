@@ -96,6 +96,7 @@ function ExerciseWeb() {
                                 style={{ color: 'white' }}
                                 value={inputText}
                                 onChangeText={setInputText}
+                                multiline
                             />
                             <TouchableOpacity
                                 className={`rounded-full p-2 flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 flex-shrink-0 ${isLoading ? 'bg-gray-400' : 'bg-white'
