@@ -35,6 +35,11 @@ function Navbar() {
                             Get Started
                         </Text>
                     </TouchableOpacity>
+                    <TouchableOpacity className="px-2 py-1 sm:px-4 sm:py-2 border-lime-green border-2 rounded-lg">
+                        <Text className="text-xs sm:text-base font-space-grotesk-medium text-lime-green">
+                            Login
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>

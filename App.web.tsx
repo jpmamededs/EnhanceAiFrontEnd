@@ -41,7 +41,6 @@ export default function App() {
 
     <GluestackUIProvider mode="dark">
       <View className="flex-1">
-        <Navbar/>
         <WebNavigator />
       </View>
     </GluestackUIProvider>

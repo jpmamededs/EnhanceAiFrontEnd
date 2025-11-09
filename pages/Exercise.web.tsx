@@ -14,7 +14,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-nat
 import { useExercise } from "../hooks/useExercise";
 import CircularProgressBar from "@/components/CircularProgressBar";
 import DrawerUI from "@/components/DrawerUI";
-import Navbar from "@/components/Navbar";
+import LoggedNavbar from "@/components/LoggedNavbar";
 
 function ExerciseWeb() {
 
@@ -33,6 +33,7 @@ function ExerciseWeb() {
 
     return (
         <>
+            <LoggedNavbar />
             <View className="w-full h-full bg-enhance-black flex flex-col sm:flex-row p-2 sm:p-4 gap-2 sm:max-w-full sm:overflow-hidden">
                 <View className="flex-1 rounded-xl px-4 sm:px-6 py-3 sm:py-4 h-full sm:min-w-0 sm:flex-shrink">
                     <View className="flex flex-row h-fit w-full items-top justify-between">
@@ -96,7 +97,6 @@ function ExerciseWeb() {
                                 style={{ color: 'white' }}
                                 value={inputText}
                                 onChangeText={setInputText}
-                                multiline
                             />
                             <TouchableOpacity
                                 className={`rounded-full p-2 flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 flex-shrink-0 ${isLoading ? 'bg-gray-400' : 'bg-white'

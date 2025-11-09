@@ -1,12 +1,14 @@
-import { View, Text, Image } from "react-native"
+import { View, Text, Image, TextInput } from "react-native"
+import { useState } from "react";
+import PillBtn from "@/components/PillBtn";
+import AuthInputs from "@/components/authComponents/AuthInputs";
 
 function AuthRegisterWeb() {
 
+
     return (
-        <View className="bg-enhance-black flex flex-row min-w-full min-h-full justify-left items-center">
-            <View className='bg-red-600 w-1/2 min-h-full'>
-            </View>
-            <View className='flex flex-col gap-2 w-fit'>
+        <View className="bg-enhance-black flex flex-row min-w-full min-h-full justify-center items-center">
+            <View className='flex flex-col w-fit items-center justify-center gap-8'>
 
                 <View className="flex flex-col w-fit gap-6 justify-center items-center">
                     <View className="flex flex-row gap-2 items-center justify-center">
@@ -14,10 +16,15 @@ function AuthRegisterWeb() {
                         <Text className="text-lime-green font-space-grotesk-light text-4xl">Register</Text>
                     </View>
 
-                    <Text className="w-[60%] font-space-grotesk-light text-white text-center" style={{ textAlign: 'center' }}>
+                    <Text className="w-[60%] font-space-grotesk-light text-xl text-white text-center" style={{ textAlign: 'center' }}>
                         fill the fields below to start <Text className="font-space-grotesk-medium">enhancing</Text> your prompts
                     </Text>
                 </View>
+
+                <AuthInputs isLogin={false} />
+
+                <PillBtn text="Register Now" />
+
 
             </View>
         </View>
