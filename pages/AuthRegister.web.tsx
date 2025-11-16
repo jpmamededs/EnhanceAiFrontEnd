@@ -3,16 +3,20 @@ import { useState } from "react";
 import PillBtn from "@/components/PillBtn";
 import AuthInputs from "@/components/authComponents/AuthInputs";
 import { useAuth } from '@/context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 function AuthRegisterWeb() {
     const { register } = useAuth();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigation = useNavigation();
 
     const handleRegister = async () => {
         try {
             await register(username, email, password);
+            navigation.navigate('Auth' as never);
+
         } catch (err) {
             console.error('Register failed:', err);
         }
