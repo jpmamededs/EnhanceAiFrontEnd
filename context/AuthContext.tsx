@@ -61,11 +61,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     api.defaults.headers.Authorization = `Bearer ${userData.token}`;
 
     setUser(userData);
+    
   };
 
   // 📝 Cadastro
-  const register = async (username: string, email: string, password: string) => {
-    await authService.register(username, email, password);
+  const register = async (userName: string, email: string, password: string) => {
+    await authService.register(userName, email, password);
     await login(email, password); // login automático após cadastro
   };
 

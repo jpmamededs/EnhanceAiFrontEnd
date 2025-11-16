@@ -2,9 +2,21 @@ import { View, Text, Image, TextInput } from "react-native"
 import { useState } from "react";
 import PillBtn from "@/components/PillBtn";
 import AuthInputs from "@/components/authComponents/AuthInputs";
+import { useAuth } from '@/context/AuthContext';
 
 function AuthRegisterWeb() {
+    const { register } = useAuth();
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    const handleRegister = async () => {
+        try {
+            await register(username, email, password);
+        } catch (err) {
+            console.error('Register failed:', err);
+        }
+    };
 
     return (
         <View className="bg-enhance-black flex flex-row min-w-full min-h-full justify-center items-center">
@@ -21,9 +33,17 @@ function AuthRegisterWeb() {
                     </Text>
                 </View>
 
-                <AuthInputs isLogin={false} />
+                <AuthInputs
+                    isLogin={false}
+                    username={username}
+                    email={email}
+                    password={password}
+                    setUsername={setUsername}
+                    setEmail={setEmail}
+                    setPassword={setPassword}
+                />
 
-                <PillBtn text="Register Now" />
+                <PillBtn text="Register Now" onPress={handleRegister} />
 
 
             </View>

@@ -12,6 +12,7 @@ import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
 import WebNavigator from './navigation/WebNavigator';
 import Navbar from '@/components/Navbar';
+import { AuthProvider } from '@/context/AuthContext';
 
 // Previne o splash screen de ser escondido automaticamente
 SplashScreen.preventAutoHideAsync();
@@ -40,9 +41,11 @@ export default function App() {
   return (
 
     <GluestackUIProvider mode="dark">
-      <View className="flex-1">
-        <WebNavigator />
-      </View>
+      <AuthProvider>
+        <View className="flex-1">
+          <WebNavigator />
+        </View>
+      </AuthProvider>
     </GluestackUIProvider>
 
   );

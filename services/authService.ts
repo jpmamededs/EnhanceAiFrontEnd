@@ -2,10 +2,12 @@ import api from './api';
 
 export const authService = {
 
-    register : async (email: string, password: string) => {
+    register : async (userName:string ,     email: string, password: string) => {
         const payload = {
+            userName,
             email,
             password}
+        
 
         const response = await api.post('/cadastro', payload);
         return response.data;

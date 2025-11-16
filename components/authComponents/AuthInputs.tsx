@@ -7,26 +7,41 @@ import { IoIosAt } from "react-icons/io";
 
 interface AuthInputsProps {
     isLogin: boolean;
+    username?: string;
+    email?: string;
+    password?: string;
+    setUsername?: (v: string) => void;
+    setEmail?: (v: string) => void;
+    setPassword?: (v: string) => void;
 }
 
-function AuthInputs({ isLogin }: AuthInputsProps) {
+function AuthInputs({ isLogin, username, email, password, setUsername, setEmail, setPassword }: AuthInputsProps) {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
     return (
+        
         <View className='flex flex-col gap-2'>
+            
+            
+             {!isLogin && (
             <View className='flex flex-row items-center justify-center bg-medium-grey px-4 py-1 rounded rounded-md'>
-                <LuMail className='text-lightiest-grey' />
-                <TextInput
-                    placeholder='E-mail'
-                    className='text-white px-2 py-2 rounded rounded-md font-space-grotesk-light focus:outline-none pr-10 flex-1 bg-transparent'
-                />
-            </View>
-            {/* Campo de Username */}
-            <View className='flex flex-row items-center justify-center bg-medium-grey px-4 py-1 rounded rounded-md mt-2'>
                 <IoIosAt className='text-lightiest-grey' />
                 <TextInput
                     placeholder='Username'
+                    value={username}
+                    onChangeText={text => setUsername?.(text)}
+                    className='text-white px-2 py-2 rounded rounded-md font-space-grotesk-light focus:outline-none pr-10 flex-1 bg-transparent'
+                />
+                
+            </View>
+        )}
+            <View className='flex flex-row items-center justify-center bg-medium-grey px-4 py-1 rounded rounded-md mt-2'>
+                <LuMail className='text-lightiest-grey' />
+                <TextInput
+                    placeholder='E-mail'
+                    value={email}
+                    onChangeText={text => setEmail?.(text)}
                     className='text-white px-2 py-2 rounded rounded-md font-space-grotesk-light focus:outline-none pr-10 flex-1 bg-transparent'
                 />
             </View>
@@ -35,6 +50,8 @@ function AuthInputs({ isLogin }: AuthInputsProps) {
                 <TextInput
                     placeholder='Password'
                     secureTextEntry={!isPasswordVisible}
+                    value={password}
+                    onChangeText={text => setPassword?.(text)}
                     className='text-white px-2 py-2 rounded rounded-md font-space-grotesk-light focus:outline-none pr-10 flex-1 bg-transparent'
                 />
                 <TouchableOpacity
