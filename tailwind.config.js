@@ -13,6 +13,7 @@ module.exports = {
         'enhance-black': '#101010',
         'medium-grey': '#C3C3C31F',
         'light-blue': '#BDC8FF',
+        'enhance-red': '#ff5b5bff'
       },
       fontFamily: {
         'sans': ['SpaceGrotesk_400Regular'],

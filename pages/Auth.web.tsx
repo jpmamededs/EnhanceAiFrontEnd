@@ -21,31 +21,34 @@ function AuthWeb() {
     };
 
     return (
-        <View className='min-w-full min-h-full bg-enhance-black flex justify-center items-center'>
-            <View className='border-2 rounded-xl border-lime-green flex flex-col items-center justify-center gap-8 px-8 py-4'>
-                
-                
-                <View className='flex flex-col gap-2 w-fit'>
-                    <View className='flex flex-row justify-center items-center gap-2'>
-                        <Image source={require('@/assets/sun.svg')} style={{ width: 30, height: 30 }} />
-                        <Text className='font-space-grotesk-light text-lime-green text-4xl'>Login</Text>
+        <View className="bg-enhance-black w-full h-full overflow-hidden">
+            <View className="flex flex-col w-full h-full justify-center items-center px-6 py-4">
+                <View className='flex flex-col w-fit items-center justify-center gap-6 sm:gap-8'>
+
+                    <View className="flex flex-col w-fit gap-4 sm:gap-6 justify-center items-center">
+                        <View className="flex flex-row gap-2 items-center justify-center">
+                            <Image source={require('@/assets/sun.svg')} style={{ height: 30, width: 30 }} />
+                            <Text className="text-lime-green font-space-grotesk-light text-4xl">Login</Text>
+                        </View>
+
+                        <Text className="w-[80%] sm:w-[60%] px-4 font-space-grotesk-light text-xl text-white text-center" style={{ textAlign: 'center' }}>
+                            Welcome back. Let's go <Text className="font-space-grotesk-medium">enhance</Text> our prompting again!
+                        </Text>
                     </View>
-                    <Text className='text-white font-space-grotesk-light text-center'>
-                        fill all your data in the blocks below.
-                    </Text>
+
+                    <View className="w-full sm:w-[60%] max-w-[80%]">
+                        <AuthInputs
+                            isLogin={true}
+                            email={email}
+                            password={password}
+                            setEmail={setEmail}
+                            setPassword={setPassword}
+                        />
+                    </View>
+
+                    <PillBtn text="Login Now" onPress={handleLogin} />
+
                 </View>
-
-                
-                <AuthInputs
-                    isLogin={true}
-                    email={email}
-                    password={password}
-                    setEmail={setEmail}
-                    setPassword={setPassword}
-                />
-
-                
-                <PillBtn text="Confirm" onPress={handleLogin} />
             </View>
         </View>
     );

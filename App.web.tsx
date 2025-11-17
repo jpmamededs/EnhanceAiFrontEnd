@@ -13,6 +13,7 @@ import '@/global.css';
 import WebNavigator from './navigation/WebNavigator';
 import Navbar from '@/components/Navbar';
 import { AuthProvider } from '@/context/AuthContext';
+import { Spinner } from '@/components/ui/spinner';
 
 // Previne o splash screen de ser escondido automaticamente
 SplashScreen.preventAutoHideAsync();
@@ -35,7 +36,11 @@ export default function App() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return null;
+    return (
+      <View className="flex-1 bg-enhance-black items-center justify-center">
+        <Spinner size="large" color="#ecff5bff" />
+      </View>
+    );
   }
 
   return (

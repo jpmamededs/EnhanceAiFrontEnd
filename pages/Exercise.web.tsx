@@ -32,21 +32,21 @@ function ExerciseWeb() {
     } = useExercise();
 
     return (
-        <>
+        <View className="w-full h-screen bg-enhance-black flex flex-col overflow-hidden">
             <LoggedNavbar />
-            <View className="w-full h-full bg-enhance-black flex flex-col sm:flex-row p-2 sm:p-4 gap-2 sm:max-w-full sm:overflow-hidden">
-                <View className="flex-1 rounded-xl px-4 sm:px-6 py-3 sm:py-4 h-full sm:min-w-0 sm:flex-shrink">
-                    <View className="flex flex-row h-fit w-full items-top justify-between">
-                        <View className="flex flex-col h-fit sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2 sm:flex-wrap">
+            <View className="flex-1 flex flex-col sm:flex-row p-2 sm:p-4 gap-2 overflow-hidden">
+                <View className="flex-1 rounded-xl px-4 sm:px-6 py-3 sm:py-4 sm:min-w-0 sm:flex-shrink flex flex-col overflow-hidden">
+                    <View className="flex flex-row h-fit w-full items-top justify-between mb-2">
+                        <View className="flex flex-col h-fit sm:flex-row sm:items-center gap-2 sm:gap-3 sm:flex-wrap">
                             <Text className="font-bold text-2xl sm:text-3xl font-space-grotesk-bold text-lime-green sm:flex-shrink-0">Nome do exercício 2</Text>
                             <Tag name="Image generation" />
                         </View>
                         <DrawerUI />
                     </View>
 
-                    <Text className="font-space-grotesk-medium text-white text-sm sm:text-base">Lorem ipsum dolor sin amet</Text>
+                    <Text className="font-space-grotesk-medium text-white text-sm sm:text-base mb-2 sm:mb-4">Lorem ipsum dolor sin amet</Text>
 
-                    <View className=" sm:mt-4 w-full h-full flex-1 bg-medium-grey rounded-lg overflow-hidden">
+                    <View className="flex-1 w-full bg-medium-grey rounded-lg overflow-hidden">
                         <Image
                             source={{ uri: 'https://cdn.pixabay.com/photo/2013/12/12/03/09/kitten-227011_1280.jpg' }}
                             style={{ width: '100%', height: '100%' }}
@@ -55,7 +55,7 @@ function ExerciseWeb() {
                     </View>
                 </View>
 
-                <View className="w-full sm:w-80 sm:max-w-[35%] sm:flex-shrink-0 h-80 sm:h-auto rounded-xl p-3 sm:p-4 border-2 border-white flex flex-col justify-start items-center gap-1">
+                <View className="w-full sm:w-80 sm:max-w-[35%] sm:flex-shrink-0 h-auto rounded-xl p-3 sm:p-4 border-2 border-white flex flex-col justify-start items-center gap-1">
                     <View className="w-full h-fit flex flex-row justify-between items-center mb-1">
                         <Text className="text-lg sm:text-xl font-space-grotesk-semibold text-lime-green flex flex-row gap-2 items-center h-fit w-fit">
                             <FaBraille /> Playground
@@ -81,7 +81,7 @@ function ExerciseWeb() {
                             </Text>
                         )}
                     </View>
-                    <View className="w-full h-fit flex flex-col gap-2">
+                    <View className="w-full h-fit flex flex-col gap-2 mt-2">
                         {generatedValue?.url && !isLoading && (
                             <TouchableOpacity className="rounded-lg bg-white w-full h-fit mb-2 flex flex-row items-center justify-between px-2 py-2" onPress={() => { setModalVisible(!modalVisible) }}>
                                 <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]" />) : (<ImCross className="text-[#FF7E7E]" />)} </Text>
@@ -140,7 +140,7 @@ function ExerciseWeb() {
                     </View>
                 </View>
             </Modal>
-        </>
+        </View>
     )
 }
 

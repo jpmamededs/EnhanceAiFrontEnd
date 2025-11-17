@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authService } from '@/services/authService';
 import api from '@/services/api';
+import { View } from 'react-native';
+import { Spinner } from '@/components/ui/spinner';
 
 type User = {
   username: string;
@@ -82,6 +84,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       delete api.defaults.headers.Authorization;
     }
   };
+
+  if (loading) {
+    return (
+      <View className="flex-1 bg-black items-center justify-center">
+        <Spinner size="large" color="$lime500" />
+      </View>
+    );
+  }
 
   return (
     <AuthContext.Provider
