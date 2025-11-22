@@ -1,14 +1,17 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { FaCircleInfo, FaChartLine, FaGear } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import LoggedNavbar from "@/components/LoggedNavbar";
 import { MdEdit } from "react-icons/md";
+import NewExerciseActionsheet from "@/components/NewExerciseActionsheet";
 
 type MenuOption = "profile" | "learning" | "settings";
 
 function ProfileWeb() {
     const [selectedMenu, setSelectedMenu] = useState<MenuOption>("profile");
+    const [showActionsheet, setShowActionsheet] = useState(false);
     const { logout } = useAuth();
 
     const handleLogout = async () => {
@@ -72,7 +75,13 @@ function ProfileWeb() {
             <View className="flex-1 flex-row overflow-hidden">
                 <View className="w-[20%] border-r border-white p-4 flex flex-col justify-between">
                     <View>
-                        <Text className="text-white font-space-grotesk-medium text-xl mb-6">Menu</Text>
+                        <View className="flex flex-row items-center justify-between w-full h-fit mb-6">
+                            <Text className="text-white font-space-grotesk-medium text-xl">Menu</Text>
+                            <TouchableOpacity className="bg-lime-green px-3 py-1 rounded-lg hover:bg-lime-green/80 transition-all" onPress={() => setShowActionsheet(true)} >
+                                <Text className="font-space-grotesk-medium">Create exercise</Text>
+                            </TouchableOpacity>
+                        </View>
+
 
                         <TouchableOpacity
                             className="py-3"
@@ -115,6 +124,10 @@ function ProfileWeb() {
                     {renderContent()}
                 </View>
             </View>
+            <NewExerciseActionsheet 
+                showActionsheet={showActionsheet}
+                handleClose={() => setShowActionsheet(false)}
+            />
         </View>
     );
 }
