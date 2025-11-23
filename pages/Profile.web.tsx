@@ -1,11 +1,13 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { FaCircleInfo, FaChartLine, FaGear } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import LoggedNavbar from "@/components/LoggedNavbar";
 import { MdEdit } from "react-icons/md";
 import NewExerciseActionsheet from "@/components/NewExerciseActionsheet";
+import { AuthContext } from '@/context/AuthContext';
+
 
 type MenuOption = "profile" | "learning" | "settings";
 
@@ -13,6 +15,13 @@ function ProfileWeb() {
     const [selectedMenu, setSelectedMenu] = useState<MenuOption>("profile");
     const [showActionsheet, setShowActionsheet] = useState(false);
     const { logout } = useAuth();
+    const  { user, loading }  =  useContext(AuthContext);
+
+    
+        
+
+
+    const idperson = user?.id;
 
     const handleLogout = async () => {
         await logout();
@@ -34,13 +43,13 @@ function ProfileWeb() {
                             <View className="flex flex-row items-center gap-4 flex-1">
                                 <View className="flex-1">
                                     <View className="flex flex-row gap-2 w-fit items-center justify-center">
-                                        <Text className="text-white font-space-grotesk-bold text-3xl">Nome Sobrenome</Text>
+                                        <Text className="text-white font-space-grotesk-bold text-3xl">{user?.username}</Text>
                                         <TouchableOpacity className="p-2 bg-lime-green/20 rounded-lg hover:bg-lime-green/30 transition-all">
                                             <MdEdit className="text-lime-green text-xl" />
                                         </TouchableOpacity>
                                     </View>
                                     <View className="flex flex-row gap-2 w-fit items-center justify-center mt-2">
-                                        <Text className="text-gray-400 font-space-grotesk-light text-lg">@nomesobrenome</Text>
+                                        <Text className="text-gray-400 font-space-grotesk-light text-lg">@{user?.email}</Text>
                                         <TouchableOpacity className="p-2 bg-lime-green/20 rounded-lg hover:bg-lime-green/30 transition-all">
                                             <MdEdit className="text-lime-green text-md" />
                                         </TouchableOpacity>
@@ -54,7 +63,7 @@ function ProfileWeb() {
                 return (
                     <View>
                         <Text className="text-white font-space-grotesk-bold text-2xl mb-4">Learning</Text>
-                        <Text className="text-white font-space-grotesk-regular">Seu progresso de aprendizado</Text>
+                        <Text className="text-white font-space-grotesk-regular">Seu progresso de aprendizado {idperson}</Text>
                     </View>
                 );
             case "settings":

@@ -9,6 +9,7 @@ type User = {
   username: string;
   email: string;
   token: string;
+  id: string;
 };
 
 type AuthContextType = {
@@ -20,7 +21,7 @@ type AuthContextType = {
   logout: () => Promise<void>;
 };
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -51,9 +52,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const data = await authService.login(email, password);
     // espera algo como: { token: "...", username: "...", email: "..." }
     const userData: User = {
-      username: data.username,
+      username: data.userName,
       email: data.email,
       token: data.token,
+      id: data.id,
     };
 
     // salva no storage
