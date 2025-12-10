@@ -8,7 +8,7 @@ import {
     ActionsheetBackdrop,
 } from '@/components/ui/actionsheet';
 
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, } from 'react-native';
 import { useState } from 'react';
 import { IoCloudUploadOutline } from 'react-icons/io5';
 
@@ -20,7 +20,9 @@ interface NewExerciseActionsheetProps {
 const exerciseTypes = [
     { label: 'Text Generation', value: 'text-generation' },
     { label: 'Image Generation', value: 'image-generation' },
-    { label: 'Project', value: 'project' },
+    { label: 'Code', value: 'code' },
+    { label: 'Project', value: 'project' }
+
 ];
 
 function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseActionsheetProps) {
@@ -54,23 +56,28 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
         }
     };
 
+    const handleSendData = () => {
+
+    }
+
     return (
         <Actionsheet isOpen={showActionsheet} onClose={handleClose} className='backdrop-blur-sm'>
             <ActionsheetBackdrop />
-            <ActionsheetContent className='bg-white border-none w-[80%] mx-auto h-[80%]'>
+            <ActionsheetContent className='bg-white border-none w-[80%] mx-auto h-[85%]'>
                 <ActionsheetDragIndicatorWrapper className='cursor-pointer'>
                     <ActionsheetDragIndicator className='bg-gray-400' />
                 </ActionsheetDragIndicatorWrapper>
                 <View className='w-full p-6 h-full'>
-                    {/* Nome do Exercício */}
+                    {/* Exercise Name */}
                     <View className='mb-4'>
                         <TextInput 
-                            placeholder="New Exercise" 
-                            className='w-full text-enhance-black font-space-grotesk-bold text-5xl'
+                            placeholder="New Exercise"
+                            placeholderTextColor="#888888"
+                            className='w-full text-enhance-black font-space-grotesk-bold text-5xl px-2'
                         />
                     </View>
 
-                    {/* Tipo de Exercício - Tags */}
+                    {/* Tags */}
                     <View className='mb-6'>
                         <View className='flex flex-row gap-3 flex-wrap'>
                             {exerciseTypes.map((type) => (
@@ -93,10 +100,11 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
                         </View>
                     </View>
 
-                    {/* Descrição */}
+                    {/* Description */}
                     <View className='w-full mb-6'>
                         <TextInput 
-                            placeholder="Descrição" 
+                            placeholder="Description"
+                            placeholderTextColor="#888888"
                             multiline 
                             numberOfLines={4}
                             textAlignVertical="top"
@@ -104,7 +112,7 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
                         />
                     </View>
 
-                    {/* Upload de Arquivos */}
+                    {/* File Upload */}
                     <View className='w-full'>
                         <label
                             onDragOver={handleDragOver}
@@ -144,6 +152,11 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
                             )}
                         </label>
                     </View>
+                    <TouchableOpacity className='w-full py-2 flex flex-row items-center justify-center bg-lime-green transition-all hover:bg-lime-green-dark rounded-md mt-6'
+                    onPress={handleSendData}
+                    >
+                        <Text className='font-space-grotesk-bold text-enhance-black'>Create Exercise</Text>
+                    </TouchableOpacity>
                 </View>
             </ActionsheetContent>
         </Actionsheet>
