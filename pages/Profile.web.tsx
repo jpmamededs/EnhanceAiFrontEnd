@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { FaCircleInfo, FaChartLine, FaGear } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -7,6 +7,11 @@ import LoggedNavbar from "@/components/LoggedNavbar";
 import { MdEdit } from "react-icons/md";
 import NewExerciseActionsheet from "@/components/NewExerciseActionsheet";
 import { AuthContext } from '@/context/AuthContext';
+import {
+    Avatar,
+    AvatarFallbackText,
+    AvatarImage,
+} from '@/components/ui/avatar';
 
 
 type MenuOption = "profile" | "learning" | "settings";
@@ -16,10 +21,6 @@ function ProfileWeb() {
     const [showActionsheet, setShowActionsheet] = useState(false);
     const { logout } = useAuth();
     const  { user, loading }  =  useContext(AuthContext);
-
-    
-        
-
 
     const idperson = user?.id;
 
@@ -37,19 +38,27 @@ function ProfileWeb() {
                     <View>
                         <Text className="text-white font-space-grotesk-bold text-2xl mb-4">Profile Info</Text>
                         <View className="flex flex-row items-center gap-6 mt-8">
-                            <View className="w-32 h-32 rounded-full bg-lime-green flex items-center justify-center">
-                                <Text className="text-enhance-black font-space-grotesk-bold text-5xl">JD</Text>
+                            <View className="relative group cursor-pointer">
+                                <Avatar size="xl">
+                                    <AvatarFallbackText>Nome Sobrenome</AvatarFallbackText>
+                                    <AvatarImage
+                                        source={require('@/assets/mainUserImg.png')}
+                                    />
+                                </Avatar>
+                                <View className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-full">
+                                    <MdEdit className="text-white text-3xl" />
+                                </View>
                             </View>
                             <View className="flex flex-row items-center gap-4 flex-1">
                                 <View className="flex-1">
                                     <View className="flex flex-row gap-2 w-fit items-center justify-center">
-                                        <Text className="text-white font-space-grotesk-bold text-3xl">{user?.username}</Text>
+                                        <Text className="text-white font-space-grotesk-bold text-3xl">Nome Sobrenome</Text>
                                         <TouchableOpacity className="p-2 bg-lime-green/20 rounded-lg hover:bg-lime-green/30 transition-all">
                                             <MdEdit className="text-lime-green text-xl" />
                                         </TouchableOpacity>
                                     </View>
                                     <View className="flex flex-row gap-2 w-fit items-center justify-center mt-2">
-                                        <Text className="text-gray-400 font-space-grotesk-light text-lg">@{user?.email}</Text>
+                                        <Text className="text-gray-400 font-space-grotesk-light text-lg">@{user?.username}</Text>
                                         <TouchableOpacity className="p-2 bg-lime-green/20 rounded-lg hover:bg-lime-green/30 transition-all">
                                             <MdEdit className="text-lime-green text-md" />
                                         </TouchableOpacity>
@@ -93,29 +102,32 @@ function ProfileWeb() {
 
 
                         <TouchableOpacity
-                            className="py-3"
+                            className="py-3 flex-row items-center gap-2"
                             onPress={() => setSelectedMenu("profile")}
                         >
-                            <Text className={`text-lg font-space-grotesk-medium flex flex-row items-center ${selectedMenu === "profile" ? "text-lime-green" : "text-white"}`}>
-                                <FaCircleInfo /> Profile info
+                            <FaCircleInfo className={selectedMenu === "profile" ? "text-lime-green" : "text-white"} />
+                            <Text className={`text-lg font-space-grotesk-medium ${selectedMenu === "profile" ? "text-lime-green" : "text-white"}`}>
+                                Profile info
                             </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            className="py-3"
+                            className="py-3 flex-row items-center gap-2"
                             onPress={() => setSelectedMenu("learning")}
                         >
-                            <Text className={`text-lg font-space-grotesk-medium flex flex-row items-center ${selectedMenu === "learning" ? "text-lime-green" : "text-white"}`}>
-                                <FaChartLine /> Learning
+                            <FaChartLine className={selectedMenu === "learning" ? "text-lime-green" : "text-white"} />
+                            <Text className={`text-lg font-space-grotesk-medium ${selectedMenu === "learning" ? "text-lime-green" : "text-white"}`}>
+                                Learning
                             </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            className="py-3"
+                            className="py-3 flex-row items-center gap-2"
                             onPress={() => setSelectedMenu("settings")}
                         >
-                            <Text className={`text-lg font-space-grotesk-medium flex flex-row items-center ${selectedMenu === "settings" ? "text-lime-green" : "text-white"}`}>
-                                <FaGear /> Settings
+                            <FaGear className={selectedMenu === "settings" ? "text-lime-green" : "text-white"} />
+                            <Text className={`text-lg font-space-grotesk-medium ${selectedMenu === "settings" ? "text-lime-green" : "text-white"}`}>
+                                Settings
                             </Text>
                         </TouchableOpacity>
                     </View>

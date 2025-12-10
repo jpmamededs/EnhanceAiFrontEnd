@@ -2,7 +2,7 @@ import api from './api';
 
 export const authService = {
 
-    register : async (userName:string ,     email: string, password: string) => {
+    register : async (userName:string , email: string, password: string) => {
         const payload = {
             userName,
             email,
