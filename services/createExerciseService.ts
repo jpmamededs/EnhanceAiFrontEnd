@@ -1,9 +1,31 @@
 import api from "./api";
 
-export const createExerciseService = {
+export enum TipoExercicio {
+    Texto = 1,
+    Imagem = 2,
+    Codigo = 3
+}
 
-    createExercise: async (data: any) => {
-        // TODO: Implementar a criação do exercício
-        return await api.post('/exercicios', data);
+export const createExerciseService = {
+    createExercise: async (
+        nome: string,
+        tipo: TipoExercicio,
+        conteudo: string,
+        imagem?: File
+    ) => {
+        const formData = new FormData();
+        formData.append('Nome', nome);
+        formData.append('Tipo', tipo.toString());
+        formData.append('Conteudo', conteudo);
+        
+        if (imagem) {
+            formData.append('Imagem', imagem);
+        }
+
+        return await api.post('/api/Exercicios', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 };
