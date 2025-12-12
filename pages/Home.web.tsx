@@ -43,7 +43,7 @@ function HomeWeb() {
 
     if (!isAuthenticated) {
         return (
-            <View className="flex flex-col w-full h-screen bg-enhance-black">
+            <View className="flex flex-col w-full h-screen bg-enhance-black" style={{ ['--scrollbar-thumb-color' as any]: '#ffffff' }}>
                 <Navbar />
                 <ScrollView className="flex-1 max-w-screen w-full">
                     <View className="flex flex-col sm:flex-row w-full min-h-[80vh] items-center justify-center gap-4 sm:gap-0 px-4 py-8 sm:px-0 sm:py-0">
@@ -127,7 +127,7 @@ function HomeWeb() {
     }
 
     return (
-        <View className="flex flex-col w-full h-screen bg-enhance-black">
+        <View className="flex flex-col w-full h-screen bg-enhance-black" style={{ ['--scrollbar-thumb-color' as any]: '#e8e8e8ff' }}>
             <LoggedNavbar />
             <View className="flex flex-row w-full flex-1 overflow-hidden">
                 <View className="w-80 border-r border-gray-800 h-full bg-enhance-black">

@@ -4,9 +4,35 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+:root {
+    --scrollbar-thumb-color: #101010;
+    --scrollbar-track-color: transparent;
+    --scrollbar-width: 10px;
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Space Grotesk', sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    padding: 2px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: var(--scrollbar-track-color);
+    border: none;
+    margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    background-color: var(--scrollbar-thumb-color);
+    cursor: pointer;
 }
