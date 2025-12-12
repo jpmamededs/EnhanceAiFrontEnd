@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-    --scrollbar-thumb-color: #101010;
+    --scrollbar-thumb-color: #888888;
     --scrollbar-track-color: transparent;
     --scrollbar-width: 10px;
 }

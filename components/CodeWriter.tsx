@@ -1,7 +1,7 @@
 import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
-import { JSX } from 'react';
 
-function CodeWriter(): JSX.Element {
+function CodeWriter() {
+
     return (
         <CodeEditor
             style={{

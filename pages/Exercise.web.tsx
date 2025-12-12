@@ -8,10 +8,11 @@ import { ImCross } from "react-icons/im";
 import { Spinner } from '@/components/ui/spinner';
 import Select from "@/components/SelectUI";
 import Tag from "../components/Tag";
+import CodeWriter from "@/components/CodeWriter";
 /* -------------------------------------------- */
 import { View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import { useRoute } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 /* -------------------------------------------- */
 import { useExercise } from "../hooks/useExercise";
 import CircularProgressBar from "@/components/CircularProgressBar";
@@ -33,6 +34,7 @@ function ExerciseWeb() {
     const [exerciseData, setExerciseData] = useState<ExerciseDetails | undefined>();
     const [inputHeight, setInputHeight] = useState(40);
     const [isLoadingExercise, setIsLoadingExercise] = useState(true);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const loadExerciseData = async () => {
@@ -53,6 +55,56 @@ function ExerciseWeb() {
         };
         loadExerciseData();
     }, [route.params]);
+
+    //Copy protection for text exercises
+    useEffect(() => {
+        if (exerciseData?.tipo === 1 && contentRef.current) {
+            const element = contentRef.current;
+
+            const preventCopy = (e: ClipboardEvent) => {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            };
+
+            const preventCut = (e: ClipboardEvent) => {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            };
+
+            const preventContextMenu = (e: MouseEvent) => {
+                e.preventDefault();
+                return false;
+            };
+
+            const preventDrag = (e: DragEvent) => {
+                e.preventDefault();
+                return false;
+            };
+
+            const preventSelectStart = (e: Event) => {
+                e.preventDefault();
+                return false;
+            };
+
+            // Adicionar event listeners
+            element.addEventListener('copy', preventCopy);
+            element.addEventListener('cut', preventCut);
+            element.addEventListener('contextmenu', preventContextMenu);
+            element.addEventListener('dragstart', preventDrag);
+            element.addEventListener('selectstart', preventSelectStart);
+
+            // Cleanup
+            return () => {
+                element.removeEventListener('copy', preventCopy);
+                element.removeEventListener('cut', preventCut);
+                element.removeEventListener('contextmenu', preventContextMenu);
+                element.removeEventListener('dragstart', preventDrag);
+                element.removeEventListener('selectstart', preventSelectStart);
+            };
+        }
+    }, [exerciseData?.tipo]);
 
     const {
         generatedValue,
@@ -108,8 +160,25 @@ function ExerciseWeb() {
                                 </View>
                             )
                         ) : (
-                            <View className="w-full h-full p-4 overflow-y-auto">
-                                <Text className="text-white font-space-grotesk-light text-sm sm:text-base">
+                            <View 
+                                // @ts-ignore
+                                ref={contentRef}
+                                className="w-full h-full p-4 overflow-y-auto"
+                                style={{
+                                    userSelect: exerciseData?.tipo === 1 ? 'none' : 'auto',
+                                    WebkitUserSelect: exerciseData?.tipo === 1 ? 'none' : 'auto',
+                                    MozUserSelect: exerciseData?.tipo === 1 ? 'none' : 'auto',
+                                    msUserSelect: exerciseData?.tipo === 1 ? 'none' : 'auto',
+                                    WebkitTouchCallout: exerciseData?.tipo === 1 ? 'none' : 'auto',
+                                    pointerEvents: exerciseData?.tipo === 1 ? 'auto' : 'auto'
+                                } as any}
+                            >
+                                <Text className="text-white font-space-grotesk-light text-sm sm:text-base"
+                                    style={{
+                                        userSelect: exerciseData?.tipo === 1 ? 'none' : 'auto',
+                                        WebkitUserSelect: exerciseData?.tipo === 1 ? 'none' : 'auto'
+                                    } as any}
+                                >
                                     {exerciseData?.conteudo || 'No content available'}
                                 </Text>
                             </View>
@@ -118,71 +187,77 @@ function ExerciseWeb() {
                 </View>
 
                 <View className={`w-full ${exerciseData?.tipo === 2 ? 'sm:w-80 sm:max-w-[35%]' : 'sm:w-[45%] sm:max-w-[55%]'} sm:flex-shrink-0 h-auto rounded-xl p-3 sm:p-4 border-2 border-white flex flex-col justify-start items-center gap-1`}>
-                    <View className="w-full h-fit flex flex-row justify-between items-center mb-1">
-                        <Text className="text-lg sm:text-xl font-space-grotesk-semibold text-lime-green flex flex-row gap-2 items-center h-fit w-fit">
-                            <FaBraille /> Playground
-                        </Text>
-                        <Select></Select>
-                    </View>
-                    <View className="flex-1 w-full rounded-lg flex items-center justify-center min-h-[120px] sm:min-h-0 overflow-hidden relative">
-                        {isLoading ? (
-                            <Spinner size="large" color="#F0FF7E" />
-                        ) : generatedValue?.url ? (
-                            <>
-                                <View className="w-full h-full rounded rounded-lg">
-                                    <Image
-                                        source={{ uri: generatedValue.url }}
-                                        className="w-full h-full"
-                                        resizeMode="contain"
-                                    />
-                                </View>
-                            </>
-                        ) : generatedValue?.text ? (
-                            <View className="w-full h-full bg-medium-grey rounded-lg p-4 overflow-y-auto">
-                                <Text className="text-white font-space-grotesk-light text-sm sm:text-base">
-                                    {generatedValue.text}
+                    {exerciseData?.tipo === 3 ? (
+                        <CodeWriter />
+                    ) : (
+                        <>
+                            <View className="w-full h-fit flex flex-row justify-between items-center mb-1">
+                                <Text className="text-lg sm:text-xl font-space-grotesk-semibold text-lime-green flex flex-row gap-2 items-center h-fit w-fit">
+                                    <FaBraille /> Playground
                                 </Text>
+                                <Select></Select>
                             </View>
-                        ) : (
-                            <Text className="text-gray-400 font-space-grotesk-light text-center px-4">
-                                The generated output will be here
-                            </Text>
-                        )}
-                    </View>
-                    <View className="w-full h-fit flex flex-col gap-2 mt-2">
-                        {(generatedValue?.url || generatedValue?.text) && !isLoading && (
-                            <TouchableOpacity className="rounded-lg bg-white w-full h-fit mb-2 flex flex-row items-center justify-between px-2 py-2" onPress={() => { setModalVisible(!modalVisible) }}>
-                                <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]" />) : (<ImCross className="text-[#FF7E7E]" />)} </Text>
-                                <CircularProgressBar score={generatedScore?.score} sizeValue={30} widthValue={4} fontSize={12} />
-                                <HiChevronRight className="text-enhance-black" />
-                            </TouchableOpacity>
-                        )}
-                        <View className="flex flex-row w-full h-fit gap-1 sm:gap-2 items-end">
-                            <TextInput
-                                placeholder="Text"
-                                className="border-2 border-white flex-1 bg-enhance-black px-3 sm:px-3 py-2 rounded-xl font-space-grotesk-light text-sm sm:text-sm min-w-0"
-                                placeholderTextColor="#888888"
-                                style={{ color: 'white', height: inputHeight, maxHeight: 200, overflow: 'hidden' }}
-                                value={inputText}
-                                onChangeText={setInputText}
-                                multiline={true}
-                                scrollEnabled={false}
-                                textAlignVertical="top"
-                                onContentSizeChange={(event) => {
-                                    const newHeight = Math.max(40, Math.min(200, event.nativeEvent.contentSize.height));
-                                    setInputHeight(newHeight);
-                                }}
-                            />
-                            <TouchableOpacity
-                                className={`rounded-full p-2 flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 flex-shrink-0 ${isLoading ? 'bg-gray-400' : 'bg-white'
-                                    }`}
-                                onPress={handleSendPrompt}
-                                disabled={isLoading}
-                            >
-                                <IoSend color={isLoading ? "#666666" : "#101010"} size={16} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                            <View className="flex-1 w-full rounded-lg flex items-center justify-center min-h-[120px] sm:min-h-0 overflow-hidden relative">
+                                {isLoading ? (
+                                    <Spinner size="large" color="#F0FF7E" />
+                                ) : generatedValue?.url ? (
+                                    <>
+                                        <View className="w-full h-full rounded rounded-lg">
+                                            <Image
+                                                source={{ uri: generatedValue.url }}
+                                                className="w-full h-full"
+                                                resizeMode="contain"
+                                            />
+                                        </View>
+                                    </>
+                                ) : generatedValue?.text ? (
+                                    <View className="w-full h-full bg-medium-grey rounded-lg p-4 overflow-y-auto">
+                                        <Text className="text-white font-space-grotesk-light text-sm sm:text-base">
+                                            {generatedValue.text}
+                                        </Text>
+                                    </View>
+                                ) : (
+                                    <Text className="text-gray-400 font-space-grotesk-light text-center px-4">
+                                        The generated output will be here
+                                    </Text>
+                                )}
+                            </View>
+                            <View className="w-full h-fit flex flex-col gap-2 mt-2">
+                                {(generatedValue?.url || generatedValue?.text) && !isLoading && (
+                                    <TouchableOpacity className="rounded-lg bg-white w-full h-fit mb-2 flex flex-row items-center justify-between px-2 py-2" onPress={() => { setModalVisible(!modalVisible) }}>
+                                        <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]" />) : (<ImCross className="text-[#FF7E7E]" />)} </Text>
+                                        <CircularProgressBar score={generatedScore?.score} sizeValue={30} widthValue={4} fontSize={12} />
+                                        <HiChevronRight className="text-enhance-black" />
+                                    </TouchableOpacity>
+                                )}
+                                <View className="flex flex-row w-full h-fit gap-1 sm:gap-2 items-end">
+                                    <TextInput
+                                        placeholder="Text"
+                                        className="border-2 border-white flex-1 bg-enhance-black px-3 sm:px-3 py-2 rounded-xl font-space-grotesk-light text-sm sm:text-sm min-w-0"
+                                        placeholderTextColor="#888888"
+                                        style={{ color: 'white', height: inputHeight, maxHeight: 200, overflow: 'hidden' }}
+                                        value={inputText}
+                                        onChangeText={setInputText}
+                                        multiline={true}
+                                        scrollEnabled={false}
+                                        textAlignVertical="top"
+                                        onContentSizeChange={(event) => {
+                                            const newHeight = Math.max(40, Math.min(200, event.nativeEvent.contentSize.height));
+                                            setInputHeight(newHeight);
+                                        }}
+                                    />
+                                    <TouchableOpacity
+                                        className={`rounded-full p-2 flex items-center justify-center w-10 h-10 sm:w-10 sm:h-10 flex-shrink-0 ${isLoading ? 'bg-gray-400' : 'bg-white'
+                                            }`}
+                                        onPress={handleSendPrompt}
+                                        disabled={isLoading}
+                                    >
+                                        <IoSend color={isLoading ? "#666666" : "#101010"} size={16} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </>
+                    )}
                 </View>
             </View>
 
