@@ -73,7 +73,7 @@ function ExerciseWeb() {
                 <LoggedNavbar />
                 <View className="flex-1 items-center justify-center">
                     <Spinner size="large" color="#ecff5bff" />
-                    <Text className="text-white font-space-grotesk-light mt-4">Carregando exercício...</Text>
+                    <Text className="text-white font-space-grotesk-light mt-4">loading exercise...</Text>
                 </View>
             </View>
         );
@@ -92,7 +92,7 @@ function ExerciseWeb() {
                         <DrawerUI />
                     </View>
 
-                    <Text className="font-space-grotesk-medium text-white text-sm sm:text-base mb-2 sm:mb-4">{exerciseData?.descricao || 'Exercise description'}</Text>
+                    <Text className="font-space-grotesk-light text-white text-sm sm:text-base mb-2 sm:mb-4">{exerciseData?.descricao || 'Exercise description'}</Text>
 
                     <View className="flex-1 w-full bg-medium-grey rounded-lg overflow-hidden">
                         {exerciseData?.caminhoImagem ? (

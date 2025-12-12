@@ -80,7 +80,7 @@ function ExerciseDetailsActionsheet({ showActionsheet, handleClose, exerciseId }
                         </View>
                     ) : exerciseDetails ? (
                         <ScrollView className='w-full h-full flex flex-col'>
-                            {/* Imagem do exercício */}
+                            
                             <View className='w-full h-64 rounded-xl overflow-hidden bg-enhance-black relative'>
                                 {exerciseDetails.caminhoImagem ? (
                                     <>
@@ -154,7 +154,7 @@ function ExerciseDetailsActionsheet({ showActionsheet, handleClose, exerciseId }
                                 )}
                                 
                                 <View className='mt-8'>
-                                    <PillBtn text='Iniciar Exercício' onPress={handleStartExercise} />
+                                    <PillBtn text='Start prompting' onPress={handleStartExercise} />
                                 </View>
                             </View>
                         </ScrollView>
