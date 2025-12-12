@@ -26,7 +26,15 @@ function LoggedNavbar() {
 
     return (
         <SafeAreaView className="bg-enhance-black border-b border-white w-full">
-            <View className="flex-row items-center justify-end px-3 py-2 sm:px-6 sm:py-4 w-full">
+            <View className="flex-row items-center justify-between px-3 py-2 sm:px-6 sm:py-4 w-full">
+                {/* Logo */}
+                <View className="flex-row items-center">
+                    <TouchableOpacity onPress={() => navigation.navigate('Home' as never)}>
+                        <Image source={require('../assets/logo.svg')} className="w-6 h-6 sm:w-8 sm:h-8" resizeMode="contain"/>
+                    </TouchableOpacity>
+                </View>
+
+                {/* User actions */}
                 <View className="flex flex-row gap-8 items-center">
                     <TouchableOpacity>
                         <PiBellBold size={24} color="white" />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { exerciseService } from "../services/exerciseService";
 
-export const useExercise = () => {
+export const useExercise = (exerciseImageUrl?: string) => {
     const [generatedValue, setGeneratedValue] = useState<{ url?: string } | null>(null);
     const [generatedScore, setGeneratedScore] = useState<{ score?: number; explanation?: string } | null>(null);
     const [inputText, setInputText] = useState("");
@@ -33,7 +33,7 @@ export const useExercise = () => {
 
                 setGeneratedValue(imageData);
 
-                const retrievedComparisonData = await exerciseService.compareGeneratedValue(imageData?.url || '', 'https://cdn.pixabay.com/photo/2013/12/12/03/09/kitten-227011_1280.jpg')
+                const retrievedComparisonData = await exerciseService.compareGeneratedValue(imageData?.url || '', exerciseImageUrl || '')
 
                 let comparisonData = null
 

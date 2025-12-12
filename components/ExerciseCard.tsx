@@ -7,7 +7,7 @@ function ExerciseCard({image, title, description, onPress} : {
     onPress?: () => void;
 }) {
     return (
-        <View className="bg-white rounded-2xl p-2 max-w-xs mx-auto">
+        <View className="bg-white rounded-2xl p-2 w-full">
 
             {/* Main img */}
             <View className="items-center justify-center mb-4">

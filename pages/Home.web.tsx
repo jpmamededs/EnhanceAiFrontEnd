@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native"
-import { FaArrowRight, FaPencilAlt } from "react-icons/fa";
+import { FaArrowRight, FaPencilAlt, FaLightbulb, FaBookOpen } from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import LoggedNavbar from "@/components/LoggedNavbar";
 import LandingCard from "../components/LandingCard";
@@ -8,12 +8,38 @@ import UnloggedCard from "@/components/UnloggedCard";
 import ExerciseDetailsActionsheet from "@/components/ExerciseDetailsActionsheet";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { exerciseService } from "@/services/exerciseService";
+import { Spinner } from "@/components/ui/spinner";
+
+// ---------------------------------//
 
 function HomeWeb() {
     const { isAuthenticated } = useAuth();
     const navigation = useNavigation();
+    const [showDrawer, setShowDrawer] = useState(true);
     const [showExerciseDetails, setShowExerciseDetails] = useState(false);
+    const [selectedExerciseId, setSelectedExerciseId] = useState<number | null>(null);
+    const [recentExercises, setRecentExercises] = useState<any[]>([]);
+    const [isLoadingExercises, setIsLoadingExercises] = useState(false);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            loadRecentExercises();
+        }
+    }, [isAuthenticated]);
+
+    const loadRecentExercises = async () => {
+        try {
+            setIsLoadingExercises(true);
+            const response = await exerciseService.listRecentExercises();
+            setRecentExercises(response.items || []);
+        } catch (error) {
+            console.error("Error loading recent exercises:", error);
+        } finally {
+            setIsLoadingExercises(false);
+        }
+    };
 
     if (!isAuthenticated) {
         return (
@@ -78,52 +104,106 @@ function HomeWeb() {
     return (
         <View className="flex flex-col w-full h-screen bg-enhance-black">
             <LoggedNavbar />
-            <ScrollView className="flex-1 w-full">
-                {/* Exercícios Section */}
-                <View className="flex flex-col w-full px-4 sm:px-8 py-8">
-                    {/* Header */}
-                    <View className="mb-8">
-                        <Text className="font-space-grotesk-light text-2xl sm:text-3xl text-white mb-2">
-                            Exercises
-                        </Text>
-                        <TouchableOpacity className="bg-enhance-black border border-white rounded-full bg-medium-grey px-4 py-2 w-fit">
-                            <Text className="font-space-grotesk text-white">Recent</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* Grid de Cards */}
-                    <View className="flex flex-row flex-wrap gap-2 justify-start">
-                        <ExerciseCard
-                            image={<FaPencilAlt className="text-white text-5xl" />}
-                            title="Onde tudo começa - gerando imagens"
-                            description="Aprenda a gerar e manipular prompts eficazes para criação de imagens."
-                            onPress={() => setShowExerciseDetails(true)}
-                        />
-                        <ExerciseCard
-                            image={<FaPencilAlt className="text-white text-5xl" />}
-                            title="Prompts - lapidando a escrita"
-                            description="Configure acertos textos precisos e objetivos para obter os melhores resultados."
-                            onPress={() => setShowExerciseDetails(true)}
-                        />
-                        <ExerciseCard
-                            image={<FaPencilAlt className="text-white text-5xl" />}
-                            title="Onde tudo começa - gerando imagens"
-                            description="Aprenda a gerar e manipular prompts eficazes para criação de imagens."
-                            onPress={() => setShowExerciseDetails(true)}
-                        />
-                        <ExerciseCard
-                            image={<FaPencilAlt className="text-white text-5xl" />}
-                            title="Prompts - lapidando a escrita"
-                            description="Configure acertos textos precisos e objetivos para obter os melhores resultados."
-                            onPress={() => setShowExerciseDetails(true)}
-                        />
-                    </View>
+            <View className="flex flex-row w-full flex-1 overflow-hidden">
+                <View className="w-80 border-r border-gray-800 h-full bg-enhance-black">
+                    <ScrollView className="flex-1">
+                        <View className="p-6">
+                            <Text className="text-white text-2xl font-space-grotesk-medium mb-6">
+                                Activity
+                            </Text>
+                            <View className="flex flex-col gap-3">
+                                <Text className="text-gray-400 font-space-grotesk-light text-sm">
+                                    Your recent activity will appear here
+                                </Text>
+                            </View>
+                        </View>
+                    </ScrollView>
                 </View>
-            </ScrollView>
-            
-            <ExerciseDetailsActionsheet 
+
+                <ScrollView className="flex-1 h-full bg-enhance-black">
+                    <View className="flex flex-col w-full px-8 py-6">
+                        <View className="mb-8">
+                            <Text className="text-white text-3xl font-space-grotesk-medium">
+                                Home
+                            </Text>
+                        </View>
+
+                        <View className="mb-8">
+                            <View className="flex flex-row items-center justify-between mb-6">
+                                <View className="px-4 py-2 border border-lightiest-grey rounded-full">
+                                    <Text className="font-space-grotesk-light text-lightiest-grey">
+                                        Recent exercises
+                                    </Text>
+                                </View>
+                            </View>
+                            
+                            {isLoadingExercises ? (
+                                <View className="h-40 w-full flex items-center justify-center">
+                                    <Spinner size="large" color="#ecff5bff" />
+                                </View>
+                            ) : recentExercises.length > 0 ? (
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    <View className="flex flex-row gap-4">
+                                        {recentExercises.map((exercise) => (
+                                            <View key={exercise.id} style={{ width: 320 }}>
+                                                <ExerciseCard
+                                                    image={<FaLightbulb className="text-lime-green text-6xl" />}
+                                                    title={exercise.nome}
+                                                    description={exercise.descricao || "No description available"}
+                                                    onPress={() => {
+                                                        setSelectedExerciseId(exercise.id);
+                                                        setShowExerciseDetails(true);
+                                                    }}
+                                                />
+                                            </View>
+                                        ))}
+                                    </View>
+                                </ScrollView>
+                            ) : (
+                                <View className="h-40 flex items-center justify-center border border-gray-800 rounded-lg">
+                                    <Text className="text-gray-400 font-space-grotesk-light">
+                                        no exercise found
+                                    </Text>
+                                </View>
+                            )}
+                        </View>
+
+                        <View className="mb-8">
+                            <View className="flex flex-row justify-between items-center mb-4">
+                                <Text className="text-white text-2xl font-space-grotesk-medium">
+                                    Currently enrolled
+                                </Text>
+                                <TouchableOpacity>
+                                    <Text className="text-lime-green text-sm font-space-grotesk-light">
+                                        view more
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View className="h-40 flex items-center justify-center border border-gray-800 rounded-lg">
+                                <Text className="text-gray-400 font-space-grotesk-light">
+                                    you're not enrolled in any exercise yet
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View className="mb-8">
+                            <Text className="text-white text-2xl font-space-grotesk-medium mb-4">
+                                Feed
+                            </Text>
+                            <View className="h-40 flex items-center justify-center border border-gray-800 rounded-lg">
+                                <Text className="text-gray-400 font-space-grotesk-light">
+                                    your feed will be here
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+
+            <ExerciseDetailsActionsheet
                 showActionsheet={showExerciseDetails}
                 handleClose={() => setShowExerciseDetails(false)}
+                exerciseId={selectedExerciseId}
             />
         </View>
     )

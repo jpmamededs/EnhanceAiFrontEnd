@@ -22,6 +22,14 @@ export const exerciseService = {
         };
         const response = await api.post(`/api/ImageComparison/compare`, payload);
         return response.data;
+    },
+    listRecentExercises: async () => {
+        const response = await api.get('/api/Exercicios/recent');
+        return response.data;
+    },
+    getExerciseById: async(exerciseId: number) =>{
+        const response = await api.get(`/api/Exercicios/${exerciseId}`);
+        return response.data;
     }
 
 }
