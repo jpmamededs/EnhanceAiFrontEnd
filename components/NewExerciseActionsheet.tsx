@@ -30,6 +30,7 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [exerciseName, setExerciseName] = useState('');
     const [description, setDescription] = useState('');
+    const [conteudo, setConteudo] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -80,6 +81,7 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
                 exerciseName,
                 selectedType,
                 description,
+                conteudo,
                 uploadedFile || undefined
             );
 
@@ -88,6 +90,7 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
             // Limpar formulário
             setExerciseName('');
             setDescription('');
+            setConteudo('');
             setSelectedType(null);
             setUploadedFile(null);
 
@@ -124,7 +127,14 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
                             {exerciseTypes.map((type) => (
                                 <TouchableOpacity
                                     key={type.value}
-                                    onPress={() => setSelectedType(type.value)}
+                                    onPress={() => {
+                                        setSelectedType(type.value);
+                                        if (type.value === TipoExercicio.Imagem) {
+                                            setConteudo('ImageGenerationException');
+                                        } else {
+                                            setConteudo('');
+                                        }
+                                    }}
                                     className={`px-6 py-3 rounded-full border-2 transition-all shadow-md ${selectedType === type.value
                                         ? 'bg-lime-green border-lime-green-dark scale-110'
                                         : 'bg-white border-gray-300'
@@ -163,6 +173,8 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
                             numberOfLines={4}
                             textAlignVertical="top"
                             className='w-full h-full p-3 border border-gray-300 rounded-lg text-enhance-black font-space-grotesk text-base'
+                            value={conteudo}
+                            onChangeText={setConteudo}
                         />
                     ) : (
                         <View className='w-full'>

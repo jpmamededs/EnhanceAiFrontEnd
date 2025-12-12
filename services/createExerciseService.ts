@@ -10,6 +10,7 @@ export const createExerciseService = {
     createExercise: async (
         nome: string,
         tipo: TipoExercicio,
+        descricao: string,
         conteudo: string,
         imagem?: File
     ) => {
@@ -17,6 +18,7 @@ export const createExerciseService = {
         formData.append('Nome', nome);
         formData.append('Tipo', tipo.toString());
         formData.append('Conteudo', conteudo);
+        formData.append('Descricao', descricao);
         
         if (imagem) {
             formData.append('Imagem', imagem);
