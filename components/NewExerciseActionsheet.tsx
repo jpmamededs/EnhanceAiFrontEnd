@@ -87,7 +87,7 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
 
             Alert.alert('Sucesso', 'Exercício criado com sucesso!');
 
-            // Limpar formulário
+            // Clear form
             setExerciseName('');
             setDescription('');
             setConteudo('');
@@ -165,7 +165,7 @@ function NewExerciseActionsheet({ showActionsheet, handleClose }: NewExerciseAct
 
                     {/* File Upload */}
 
-                    {selectedType === TipoExercicio.Texto ? (
+                    {selectedType === TipoExercicio.Texto || selectedType === TipoExercicio.Codigo ? (
                         <TextInput
                             placeholder="Type the exercise text here."
                             placeholderTextColor="#888888"

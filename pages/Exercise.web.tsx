@@ -65,7 +65,7 @@ function ExerciseWeb() {
         setModalVisible,
         setInputText,
         handleSendPrompt,
-    } = useExercise(exerciseData?.caminhoImagem);
+    } = useExercise(exerciseData?.caminhoImagem, exerciseData?.conteudo, exerciseData?.tipo);
 
     if (isLoadingExercise) {
         return (
@@ -95,21 +95,29 @@ function ExerciseWeb() {
                     <Text className="font-space-grotesk-light text-white text-sm sm:text-base mb-2 sm:mb-4">{exerciseData?.descricao || 'Exercise description'}</Text>
 
                     <View className="flex-1 w-full bg-medium-grey rounded-lg overflow-hidden">
-                        {exerciseData?.caminhoImagem ? (
-                            <Image
-                                source={{ uri: exerciseData.caminhoImagem }}
-                                style={{ width: '100%', height: '100%' }}
-                                resizeMode="contain"
-                            />
+                        {exerciseData?.tipo === 2 ? (
+                            exerciseData?.caminhoImagem ? (
+                                <Image
+                                    source={{ uri: exerciseData.caminhoImagem }}
+                                    style={{ width: '100%', height: '100%' }}
+                                    resizeMode="contain"
+                                />
+                            ) : (
+                                <View className="w-full h-full flex items-center justify-center">
+                                    <Text className="text-gray-400 font-space-grotesk-light">no image</Text>
+                                </View>
+                            )
                         ) : (
-                            <View className="w-full h-full flex items-center justify-center">
-                                <Text className="text-gray-400 font-space-grotesk-light">no image</Text>
+                            <View className="w-full h-full p-4 overflow-y-auto">
+                                <Text className="text-white font-space-grotesk-light text-sm sm:text-base">
+                                    {exerciseData?.conteudo || 'No content available'}
+                                </Text>
                             </View>
                         )}
                     </View>
                 </View>
 
-                <View className="w-full sm:w-80 sm:max-w-[35%] sm:flex-shrink-0 h-auto rounded-xl p-3 sm:p-4 border-2 border-white flex flex-col justify-start items-center gap-1">
+                <View className={`w-full ${exerciseData?.tipo === 2 ? 'sm:w-80 sm:max-w-[35%]' : 'sm:w-[45%] sm:max-w-[55%]'} sm:flex-shrink-0 h-auto rounded-xl p-3 sm:p-4 border-2 border-white flex flex-col justify-start items-center gap-1`}>
                     <View className="w-full h-fit flex flex-row justify-between items-center mb-1">
                         <Text className="text-lg sm:text-xl font-space-grotesk-semibold text-lime-green flex flex-row gap-2 items-center h-fit w-fit">
                             <FaBraille /> Playground
@@ -129,6 +137,12 @@ function ExerciseWeb() {
                                     />
                                 </View>
                             </>
+                        ) : generatedValue?.text ? (
+                            <View className="w-full h-full bg-medium-grey rounded-lg p-4 overflow-y-auto">
+                                <Text className="text-white font-space-grotesk-light text-sm sm:text-base">
+                                    {generatedValue.text}
+                                </Text>
+                            </View>
                         ) : (
                             <Text className="text-gray-400 font-space-grotesk-light text-center px-4">
                                 The generated output will be here
@@ -136,7 +150,7 @@ function ExerciseWeb() {
                         )}
                     </View>
                     <View className="w-full h-fit flex flex-col gap-2 mt-2">
-                        {generatedValue?.url && !isLoading && (
+                        {(generatedValue?.url || generatedValue?.text) && !isLoading && (
                             <TouchableOpacity className="rounded-lg bg-white w-full h-fit mb-2 flex flex-row items-center justify-between px-2 py-2" onPress={() => { setModalVisible(!modalVisible) }}>
                                 <Text className="text-black font-space-grotesk-medium flex flex-row items-center w-fit gap-1"><TbNorthStar /> Instance status: {passedExercise == true ? (<FaCheckCircle className="text-[#8BFF7E]" />) : (<ImCross className="text-[#FF7E7E]" />)} </Text>
                                 <CircularProgressBar score={generatedScore?.score} sizeValue={30} widthValue={4} fontSize={12} />
@@ -186,7 +200,7 @@ function ExerciseWeb() {
                         </Text>
                         <CircularProgressBar score={generatedScore?.score} sizeValue={120} widthValue={15} />
                         <View className="mb-6">
-                            <Text className="text-sm font-space-grotesk-light text-gray-600">
+                            <Text className="text-sm font-space-grotesk-light text-gray-600 mt-4">
                                 {generatedScore?.explanation || 'Loading description'}
                             </Text>
                         </View>
