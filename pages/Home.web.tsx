@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native"
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native"
 import { FaArrowRight, FaPencilAlt, FaLightbulb, FaBookOpen } from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import LoggedNavbar from "@/components/LoggedNavbar";
@@ -45,7 +45,7 @@ function HomeWeb() {
         return (
             <View className="flex flex-col w-full h-screen bg-enhance-black">
                 <Navbar />
-                <ScrollView className="flex-1 w-full">
+                <ScrollView className="flex-1 max-w-screen w-full">
                     <View className="flex flex-col sm:flex-row w-full min-h-[80vh] items-center justify-center gap-4 sm:gap-0 px-4 py-8 sm:px-0 sm:py-0">
                         <View className="w-full sm:w-1/2 flex flex-col justify-center gap-4 sm:gap-8 p-4 sm:p-8 h-fit">
                             <Text className="font-space-grotesk-medium text-2xl sm:text-3xl md:text-4xl text-lime-green w-full">A new era arrived.
@@ -63,8 +63,33 @@ function HomeWeb() {
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View className="bg-red-600 w-full sm:w-1/2 flex items-center justify-center h-48 sm:h-64 md:h-96 mt-4 sm:mt-0">
-                            <Text className="text-white text-xl sm:text-2xl md:text-3xl">Hi</Text>
+                        <View className="sm:w-1/2 flex items-center justify-center h-48 sm:h-64 md:h-96 mt-4 sm:mt-0 relative">
+                            <View className="h-full w-[80%] bg-light-blue relative overflow-visible" style={{ borderTopLeftRadius: 120, borderRadius: 10 }}>
+                                <Image
+                                    source={require("@/assets/vector.png")}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        right: -40,
+                                        width: 240,
+                                        height: 240,
+                                        zIndex: 5
+                                    }}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                            <Image
+                                source={require("@/assets/metalStar.png")}
+                                style={{
+                                    position: 'absolute',
+                                    bottom: -100,
+                                    left: -50,
+                                    width: 240,
+                                    height: 240,
+                                    zIndex: 10
+                                }}
+                                resizeMode="contain"
+                            />
                         </View>
                     </View>
 
@@ -136,7 +161,7 @@ function HomeWeb() {
                                     </Text>
                                 </View>
                             </View>
-                            
+
                             {isLoadingExercises ? (
                                 <View className="h-40 w-full flex items-center justify-center">
                                     <Spinner size="large" color="#ecff5bff" />
